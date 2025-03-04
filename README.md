@@ -80,7 +80,11 @@ chmod +x start_ollama_webui.sh
 ./start_ollama_webui.sh
 ```
 
-# 6. ollama 프로세스 종료 원할 시
+# 6. ollama 캐시해제, 프로세스 종료 원할 시
 ```
+#ollama 가 캐시한 모델 해제
+ollama stop
+
+#ollama 강제 종료 후 vram 해제
 brew services stop ollama
 ```
