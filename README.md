@@ -39,13 +39,9 @@ ollama run deepseek-r1:7b
 #위에까지 되었다면 Open WebUI를 통해 웹에서 돌려보고자 함.
 #docker가 설치되고 사용 가능한 상태여야 하는데 도커관련 설명은 생략.
 
-docker run -d \
-  --name open-webui \
-  -p 3000:3000 \
-  -e OLLAMA_API_BASE_URL=http://host.docker.internal:11434 \
-  -v open-webui:/app/backend/data \
-  --restart unless-stopped \
-  ghcr.io/open-webui/open-webui:main
+# https://github.com/open-webui/open-webui 공식 readme 참고
+#If Ollama is on your computer, use this command
+docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
 
 #-p 3000:3000 → 웹 브라우저에서 http://localhost:3000으로 접속 가능
 #OLLAMA_API_BASE_URL=http://host.docker.internal:11434 → Ollama와 연동
@@ -63,13 +59,7 @@ echo "Starting Ollama..."
 brew services start ollama
 
 echo "Starting Open WebUI..."
-docker start open-webui || docker run -d \
-  --name open-webui \
-  -p 3000:3000 \
-  -e OLLAMA_API_BASE_URL=http://host.docker.internal:11434 \
-  -v open-webui:/app/backend/data \
-  --restart unless-stopped \
-  ghcr.io/open-webui/open-webui:main
+docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
 
 echo "All services started. Access WebUI at http://localhost:3000"
 ```
